@@ -1,0 +1,102 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Metadata": {
+        "AWS::CloudFormation::Designer": {
+            "9b2a44ce-7f1a-496c-91f7-6d75e94c2488": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 210,
+                    "y": 102
+                },
+                "z": 0,
+                "embeds": [],
+                "dependson": [
+                    "99db7837-c55c-4329-86da-789ca99436d7"
+                ]
+            },
+            "99db7837-c55c-4329-86da-789ca99436d7": {
+                "size": {
+                    "width": 60,
+                    "height": 60
+                },
+                "position": {
+                    "x": 160,
+                    "y": 60
+                },
+                "z": 0,
+                "embeds": []
+            },
+            "f5e5c2a9-1ed0-4b44-8c81-287f030e31b3": {
+                "source": {
+                    "id": "9b2a44ce-7f1a-496c-91f7-6d75e94c2488"
+                },
+                "target": {
+                    "id": "99db7837-c55c-4329-86da-789ca99436d7"
+                },
+                "z": 1
+            }
+        }
+    },
+    "Resources": {
+        "MyEc2": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": "ami-0ed9277fb7eb570c9",
+                "KeyName": "pacifickeypair",
+                "InstanceType": "t2.micro",
+                "AvailabilityZone": "us-east-1a",
+                "SubnetId": "subnet-0acb2b05ddad162ba",
+                "BlockDeviceMappings": [
+                    {
+                        "DeviceName": "/dev/sdm",
+                        "Ebs": {
+                            "VolumeType": "gp2",
+                            "Iops": "200",
+                            "DeleteOnTermination": "true",
+                            "VolumeSize": "8"
+                        }
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "9b2a44ce-7f1a-496c-91f7-6d75e94c2488"
+                }
+            },
+            "DependsOn": [
+                "EC2SGAllow"
+            ]
+        },
+        "EC2SGAllow": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "Allow http to client host",
+                "VpcId": "vpc-3601cb4b",
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 80,
+                        "ToPort": 80,
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ],
+                "SecurityGroupEgress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 80,
+                        "ToPort": 80,
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            },
+            "Metadata": {
+                "AWS::CloudFormation::Designer": {
+                    "id": "99db7837-c55c-4329-86da-789ca99436d7"
+                }
+            }
+        }
+    }
+}
