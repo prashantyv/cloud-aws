@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  labels:
+    env: dev
+    app: ngnix
+spec:
+  replicas: 2 # tells deployment to run 1 pods matching the template
+  selector:
+    matchLabels:
+      env: dev
+      app: ngnix
+  template:
+    metadata:
+      labels:
+        env: dev
+        app: ngnix
+    spec:
+      containers:
+      - name: nginx
+        image: nginx
+        resources:
+           limits:
+             memory: "128Mi"
+             cpu: "500m"
+        ports:
+        - containerPort: 80
